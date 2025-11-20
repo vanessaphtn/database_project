@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS artists (
     artistId SERIAL PRIMARY KEY,
-    artistDisplayName VARCHAR(200),
+    name VARCHAR(200) UNIQUE,
     nationality VARCHAR(100),
     birth INT,
     death INT,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS artists (
 
 CREATE TABLE IF NOT EXISTS departments (
     departmentId SERIAL PRIMARY KEY,
-    name VARCHAR(100) 
+    name VARCHAR(100) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS origins (
@@ -17,19 +17,21 @@ CREATE TABLE IF NOT EXISTS origins (
     city VARCHAR(100),
     country VARCHAR(100),
     region VARCHAR(100),
-    culture VARCHAR(100)
+    culture VARCHAR(100),
+    UNIQUE(city, country, region, culture)
 );
 
 CREATE TABLE IF NOT EXISTS periods (
     periodId SERIAL PRIMARY KEY,
-    period VARCHAR(100),
-    dynasty VARCHAR(200),
-    reign VARCHAR(200)
+    period TEXT,
+    dynasty TEXT,
+    reign TEXT,
+    UNIQUE(period, dynasty, reign)
 );
 
 CREATE TABLE IF NOT EXISTS mediums (
     mediumId SERIAL PRIMARY KEY,
-    medium VARCHAR(200)
+    medium VARCHAR(200) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS artworks (
@@ -39,11 +41,11 @@ CREATE TABLE IF NOT EXISTS artworks (
     departmentId INT NOT NULL REFERENCES departments(departmentId),
     isHighlight BOOLEAN,
     isPublicDomain BOOLEAN,
-    objectName VARCHAR(100),
-    classification VARCHAR(100), 
+    objectName TEXT,
+    classification TEXT, 
     title TEXT,
     accessionYear INT,
-    objectDate VARCHAR(100),
+    objectDate TEXT,
     objectBeginDate INT,
     objectEndDate INT,
     dimensions TEXT
